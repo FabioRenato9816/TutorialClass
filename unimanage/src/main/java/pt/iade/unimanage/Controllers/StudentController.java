@@ -1,7 +1,7 @@
 package pt.iade.unimanage.Controllers;
 
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,13 +38,14 @@ public class StudentController {
             throw new NotFoundException("" + number, "Student", "number");
     }
 
-    @DeleteMapping(path = "{number}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(path = "apagar/{number}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response deleteStudent(@PathVariable("number") int number) {
         logger.info("deleting student with number " + number);
+        Student student = StudentRepository.getStudent(number);
         if (StudentRepository.deleteStudent(number))
-            return new Response(number + " was deleted.", null);
+            return new Response(number + " was deleted.", student);
         else
-            return new Response(number + " not found.", null);
+            return new Response(number + " not found.", student);
     }
 
     @PostMapping(path = "/add", produces = MediaType.APPLICATION_JSON_VALUE)

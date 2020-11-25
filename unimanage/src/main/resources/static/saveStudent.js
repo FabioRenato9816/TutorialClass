@@ -2,7 +2,7 @@ async function save() {
     try {
         let data = {
             name: document.getElementById("name").value,
-            birthdate: (document.getElementById("birthDate").value),
+            birthdate: document.getElementById("birthDate").value,
             gender: (document.getElementById("gender").value),
             email: (document.getElementById("email").value)
         };
