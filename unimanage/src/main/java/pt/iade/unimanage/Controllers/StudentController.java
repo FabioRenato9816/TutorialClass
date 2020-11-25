@@ -47,7 +47,7 @@ public class StudentController {
             return new Response(number + " not found.", null);
     }
 
-    @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public Student addStudent(@RequestBody Student student) {
         return StudentRepository.addStudent(student);
 
