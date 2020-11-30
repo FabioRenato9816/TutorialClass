@@ -9,6 +9,8 @@ public class Student {
    private String email;
    private char gender;
    private int number;
+   private ArrayList<Unit> units;
+   private ArrayList<Enrolment> enrolments;
 
    public Student(String name, LocalDate birthDate, char gender) {
       this.name = name;
@@ -54,5 +56,26 @@ public class Student {
    public void setNumber(int number) {
       this.number = number;
    }
+
+   public ArrayList<Unit> getUnits(){ return units;}
+   public Enrolment getEnrolmentByUnitId(int unitId){
+     for (Enrolment enr:enrolments)
+         if (enr.getUnit().getId()==unitId)return enr;
+     return null;
+   }
+   public void enroll(Unit unit) {
+     units.add(unit);
+     unit.getStudents().add(this);
+   }
+
+   public ArrayList<Enrolment> getEnrolment(){
+      return enrolments;
+   }
+      
+   public void enroll(Enrolment enrolment) {
+      enrolments.add(enrolment);
+      enrolment.getUnit().getEnrolments().add(enrolment);
+   }
+      
 
 }
