@@ -15,6 +15,7 @@ public class StudentRepository {
         students.add(new Student("Mary", LocalDate.parse("1999-12-23"), 'F'));
         s = new Student("James", LocalDate.parse("2001-07-02"), 'M');
         students.add(s);
+        s.setEmail("james12@gmail.com");
     }
 
     public static ArrayList<Student> getStudents() {

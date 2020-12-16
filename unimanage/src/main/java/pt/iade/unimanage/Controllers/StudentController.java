@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,12 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import pt.iade.unimanage.models.Enrolment;
 import pt.iade.unimanage.models.Student;
 import pt.iade.unimanage.models.StudentRepository;
+import pt.iade.unimanage.models.Unit;
 import pt.iade.unimanage.models.exceptions.NotFoundException;
-
+import pt.iade.unimanage.models.exceptions.AlreadyExistsException;
 @RestController
 @RequestMapping(path = "/api/students")
 public class StudentController {
-    private java.util.logging.Logger logger = LoggerFactory.getLogger(StudentController.class);
+    private Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<Student> getStudents() {
@@ -83,7 +85,7 @@ public class StudentController {
             Unit unit = UnitRepository.getUnit(unitId);
             if (unit != null) {
                 if(student.getEnrolmentByUnitId(unitId) != null)
-                    throw new AlreadyExistsExceptionn(""+unitId, "Unit", "id");
+                    throw new AlreadyExistsException("" + unitId, "Unit", "id");
                 else {
                     Enrolment enrolment = new Enrolment(student,unit,-1);
                     student.enroll(enrolment);

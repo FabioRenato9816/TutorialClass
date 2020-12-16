@@ -1,21 +1,18 @@
 package pt.iade.unimanage.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class Student {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+public class Student extends Person {
    private static int nextNumber = 0;
-   private String name;
-   private LocalDate birthDate;
-   private String email;
-   private char gender;
    private int number;
-   private ArrayList<Unit> units;
+   @JsonIgnore
    private ArrayList<Enrolment> enrolments;
 
-   public Student(String name, LocalDate birthDate, char gender) {
-      this.name = name;
-      this.birthDate = birthDate;
-      this.gender = gender;
+   public Student(String name, LocalDate birthDay, char gender) {
+      super(name, birthDay, gender);
       this.number = nextNumber;
       nextNumber++;
       email = "";
@@ -33,8 +30,8 @@ public class Student {
       this.name = name;
    }
 
-   public LocalDate getBirthDate() {
-      return birthDate;
+   public LocalDate getBirthDay() {
+      return birthDay;
    }
 
    public char getGender() {
@@ -57,16 +54,13 @@ public class Student {
       this.number = number;
    }
 
-   public ArrayList<Unit> getUnits(){ return units;}
+   
    public Enrolment getEnrolmentByUnitId(int unitId){
      for (Enrolment enr:enrolments)
          if (enr.getUnit().getId()==unitId)return enr;
      return null;
    }
-   public void enroll(Unit unit) {
-     units.add(unit);
-     unit.getStudents().add(this);
-   }
+ 
 
    public ArrayList<Enrolment> getEnrolment(){
       return enrolments;
@@ -75,6 +69,16 @@ public class Student {
    public void enroll(Enrolment enrolment) {
       enrolments.add(enrolment);
       enrolment.getUnit().getEnrolments().add(enrolment);
+   }
+
+   @Override
+   public String getReference() {
+      return "S" + this.number;
+   }
+
+   @Override
+   public String toString() {
+      return "" + this.number + ": " + this.name;
    }
       
 
